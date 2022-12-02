@@ -33,7 +33,7 @@ Powinno być możliwe poznanie gatunku organizmu:
     const species_t &get_species();
 
 Ponadto obiekt typu Organism powinien mieć dodatkowe metody umożliwiające
-eleganckie rozwiązanie zadania, o specyfikacji wybranej przez rozwiązujących. // ? wszystkie dodatkowe metody mogą być prywatne
+eleganckie rozwiązanie zadania, o specyfikacji wybranej przez rozwiązujących.
 
 Organizmy spotykają się według poniższych reguł. Reguły są aplikowane po kolei,
 aż do znalezienia pierwszej, która rozstrzyga efekt spotkania. Wtedy kończymy
@@ -116,13 +116,13 @@ Możliwe jest zadeklarowanie
 
     Herbivore<std::string> lion("Panthera leo", 462);
 
-Celem jest odpowiedzenie na pytanie, co by było gdyby lwy były roślinożerne?
+Celem jest odpowiedzenie na pytanie, co by było gdyby lwy były roślinożerne? //???
 
 W deklaracjach funkcji i klas należy powstawiać specyfikatory const oraz
-constexpr wszędzie tam, gdzie to jest konieczne lub możliwe.
+constexpr wszędzie tam, gdzie to jest konieczne lub możliwe. // XD // Są praktycznie wszędzie
 
 W tym zadaniu zabronione jest korzystanie z mechanizmu dziedziczenia.
-Należy zamiast tego używać specjalizacji szablonów.
+Należy zamiast tego używać specjalizacji szablonów. // Za bardzo tego niu używam
 
 Rozwiązanie będzie kompilowane za pomocą polecenia
 
