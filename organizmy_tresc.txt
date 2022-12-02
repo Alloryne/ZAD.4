@@ -1,10 +1,10 @@
 Celem zadania jest napisanie kodu do symulowania interakcji organizmów
 w środowisku naturalnym. Organizm jest reprezentowany przez instancję szablonu
 
-    template <typename species_t, bool can_eat_meat, bool can_eat_plants> class Organism;
+    template <typename species_t, bool can_eat_meat, bool can_eat_plants> class Organism; // ok
 
 Typ species_t określa gatunek. Typ ten powinien spełniać koncept
-std::equality_comparable, co powinno zostać sprawdzone podczas kompilowania.
+std::equality_comparable, co powinno zostać sprawdzone podczas kompilowania. // koncepty są sprawdzane w trakcie kompilowania, ok
 Wartości can_eat_plants oraz can_eat_meat określają odpowiednio, czy dany
 organizm potrafi jeść mięso lub rośliny.
 
@@ -14,14 +14,14 @@ szablonu Organism:
     Carnivore – mięsożerca,
     Omnivore – wszystkożerca,
     Herbivore – roślinożerca,
-    Plant – roślina, nie potrafi jeść ani mięsa, ani roślin.
+    Plant – roślina, nie potrafi jeść ani mięsa, ani roślin. // maybe ok
 
 Każdy organizm powinien definiować metodę
 
-    uint64_t get_vitality();
+    uint64_t get_vitality(); // ok
 
 która zwraca witalność danego organizmu. Organizm, którego witalność wynosi 0,
-uznaje się za martwy.
+uznaje się za martwy. // ok
 
 Klasa Organism powinna udostępniać konstruktor ustawiający gatunek
 i początkową witalność organizmu:
@@ -33,7 +33,7 @@ Powinno być możliwe poznanie gatunku organizmu:
     const species_t &get_species();
 
 Ponadto obiekt typu Organism powinien mieć dodatkowe metody umożliwiające
-eleganckie rozwiązanie zadania, o specyfikacji wybranej przez rozwiązujących.
+eleganckie rozwiązanie zadania, o specyfikacji wybranej przez rozwiązujących. // ? wszystkie dodatkowe metody mogą być prywatne
 
 Organizmy spotykają się według poniższych reguł. Reguły są aplikowane po kolei,
 aż do znalezienia pierwszej, która rozstrzyga efekt spotkania. Wtedy kończymy
@@ -47,7 +47,7 @@ i sygnalizować błąd.
 
     Carnivore<std::string> lion("Panthera leo", 462);
     Herbivore<std::string> gazelle("Gazella dorcas", 130);
-    Omnivore<uint64_t> dog(1, 15);
+    Omnivore<uint64_t> dog(1, 15); // ok
 
 Uznajemy, że dwa organizmy o różnych preferencjach żywieniowych są różnymi
 gatunkami, nawet jeżeli porównanie species_t zwraca true. Przykładowo
@@ -58,7 +58,7 @@ poniższe dwa organizmy są traktowane jako różne gatunki.
 
 2. Nie jest możliwe spotkanie dwóch roślin, gdyż są one niemobilne. Próba
 spotkania dwóch roślin powinna być wykrywana podczas kompilowania
-i sygnalizować błąd.
+i sygnalizować błąd. // ok
 
 3. Spotkanie, w którym jedna ze stron jest martwa, nie powoduje skutków.
 
