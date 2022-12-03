@@ -25,10 +25,10 @@ private:
 public:
     // Constructors
     constexpr Organism(species_t const &species, uint64_t vitality)
-            : species(species), vitality(vitality) {}
+            : vitality(vitality), species(species) {}
 
     // Accessors
-    constexpr const uint64_t get_vitality() const {
+    constexpr uint64_t get_vitality() const {
         return vitality;
     }
 
@@ -38,12 +38,12 @@ public:
 
     // Methods defined by us for use in the encounter() method.
     // Returns true if an organism is dead.
-    constexpr const bool is_dead() const {
+    constexpr bool is_dead() const {
         return (vitality == 0);
     }
 
     // Returns true if the organism.
-    constexpr const bool plant() const {
+    constexpr bool plant() const {
         return (!(can_eat_meat || can_eat_plants));
     }
 
@@ -54,7 +54,7 @@ public:
             bool can_eat_meat_other,
             bool can_eat_plants_other
     >
-    constexpr const bool can_I_eat(
+    constexpr bool can_I_eat(
             Organism<
                     species_t_other,
                     can_eat_meat_other,
@@ -62,8 +62,8 @@ public:
             > organism
     ) {
         return (
-                can_eat_meat && !organism.plant()
-                || can_eat_plants && organism.plant()
+                (can_eat_meat && !organism.plant())
+                || (can_eat_plants && organism.plant())
         );
     }
 
@@ -108,7 +108,7 @@ namespace {
             bool sp2_eats_m,
             bool sp2_eats_p
     > // template
-    constexpr const bool // return type
+    constexpr bool // return type
     sex(
             Organism<species_t, sp1_eats_m, sp1_eats_p> organism1,
             Organism<species_t, sp2_eats_m, sp2_eats_p> organism2
@@ -207,18 +207,18 @@ encounter(
     );
 }
 
-// template <
-//     typename species_t,
-//     bool sp1_eats_m,
-//     bool sp1_eats_p,
-//     typename ... Args
-// > // template
-// constexpr Organism<species_t, sp1_eats_m, sp1_eats_p> // return type
-// encounter_series(
-//     Organism<species_t, sp1_eats_m, sp1_eats_p> organism1, Args ... args
-// ) /*arguments*/ {
-//     Organism<species_t, sp1_eats_m, sp1_eats_p> organism1_after = organism1.
-//     return (organism1_after = get<0>(encounter(organism1_after, args)));
-// } // function body
+template <
+    typename species_t,
+    bool sp1_eats_m,
+    bool sp1_eats_p,
+    typename ... Args
+> // template
+constexpr Organism<species_t, sp1_eats_m, sp1_eats_p> // return type
+encounter_series(
+    Organism<species_t, sp1_eats_m, sp1_eats_p> organism1, Args ... args
+) /*arguments*/ {
+    (... , (organism1 = get<0>(encounter(organism1, args))));
+    return organism1;
+} // function body
 
 #endif
