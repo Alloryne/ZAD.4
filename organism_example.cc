@@ -34,6 +34,8 @@ int main() {
 
     static_assert(!wolf_result_2.is_dead());
     static_assert(wolf_result_2.get_vitality() == 105);
+    static_assert(!wolf.is_dead());
+    static_assert(wolf.get_vitality() == 100);
 
     // Funkcja get_species() powinna zwracać gatunek.
     static_assert(wolf.get_species() == wolf_id);

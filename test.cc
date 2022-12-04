@@ -1212,6 +1212,81 @@ void org_test_107() {
     assert(!std::get<2>(enc).has_value());
 }
 
+// Plant tests
+
+// Doesn't work as it should
+//void org_test_108() {
+//    Plant<string> o1 = {"tree", 40};
+//    Plant<string> o2 = {"Tyranozaur", 60};
+//
+//    auto enc = encounter(o1, o2);
+//
+//    assert(std::get<0>(enc).get_vitality() == 0);
+//    assert(std::get<1>(enc).get_vitality() == 80);
+//    assert(!std::get<2>(enc).has_value());
+//}
+
+void org_test_109() {
+    Plant<string> o1 = {"Tree", 40};
+    Carnivore<string> o2 = {"Tyranozaur", 60};
+
+    auto enc = encounter(o1, o2);
+
+    assert(std::get<0>(enc).get_vitality() == 40);
+    assert(std::get<1>(enc).get_vitality() == 60);
+    assert(!std::get<2>(enc).has_value());
+}
+void org_test_110() {
+    Plant<string> o1 = {"Tree", 40};
+    Omnivore<string> o2 = {"Tyranozaur", 60};
+
+    auto enc = encounter(o1, o2);
+
+    assert(std::get<0>(enc).get_vitality() == 0);
+    assert(std::get<1>(enc).get_vitality() == 100);
+    assert(!std::get<2>(enc).has_value());
+}
+void org_test_111() {
+    Plant<string> o1 = {"Tree", 40};
+    Herbivore<string> o2 = {"Tyranozaur", 60};
+
+    auto enc = encounter(o1, o2);
+
+    assert(std::get<0>(enc).get_vitality() == 0);
+    assert(std::get<1>(enc).get_vitality() == 100);
+    assert(!std::get<2>(enc).has_value());
+}
+void org_test_112() {
+    Carnivore<string> o1 = {"Dinozaur", 40};
+    Plant<string> o2 = {"Tree", 40};
+
+    auto enc = encounter(o1, o2);
+
+    assert(std::get<0>(enc).get_vitality() == 40);
+    assert(std::get<1>(enc).get_vitality() == 40);
+    assert(!std::get<2>(enc).has_value());
+}
+void org_test_113() {
+    Omnivore<string> o1 = {"Dinozaur", 40};
+    Plant<string> o2 = {"Tree", 40};
+
+    auto enc = encounter(o1, o2);
+
+    assert(std::get<0>(enc).get_vitality() == 80);
+    assert(std::get<1>(enc).get_vitality() == 0);
+    assert(!std::get<2>(enc).has_value());
+}
+void org_test_114() {
+    Herbivore<string> o1 = {"Dinozaur", 40};
+    Plant<string> o2 = {"Tree", 40};
+
+    auto enc = encounter(o1, o2);
+
+    assert(std::get<0>(enc).get_vitality() == 80);
+    assert(std::get<1>(enc).get_vitality() == 0);
+    assert(!std::get<2>(enc).has_value());
+}
+
 int main() {
     org_test_0();
     org_test_1();
@@ -1321,5 +1396,11 @@ int main() {
     org_test_105();
     org_test_106();
     org_test_107();
+    org_test_109();
+    org_test_110();
+    org_test_111();
+    org_test_112();
+    org_test_113();
+    org_test_114();
     return 0;
 }

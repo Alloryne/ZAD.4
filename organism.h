@@ -5,10 +5,6 @@
 #include <tuple>
 #include <cstdint>
 
-// TODO
-// encounter_series()
-// Przerobienie żeby więcej używać szablonów???
-
 template <bool sp1_eats_m, bool sp1_eats_p, bool sp2_eats_m, bool sp2_eats_p>
 concept two_plants_cant_meet =
 sp1_eats_m
@@ -36,19 +32,19 @@ public:
         return species;
     }
 
-    // Methods defined by us for use in the encounter() method.
-    // Returns true if an organism is dead.
+    // Methods defined for use in the encounter() method.
+
+    // Returns true if the organism is dead.
     constexpr bool is_dead() const {
         return (vitality == 0);
     }
 
-    // Returns true if the organism.
+    // Returns true if the organism is a plant.
     constexpr bool plant() const {
         return (!(can_eat_meat || can_eat_plants));
     }
 
-    // Returns true if this organism can eat organism given.
-    // Determined by specialization, default is Omnivore.
+    // Returns true if this organism can eat the organism given.
     template <
             typename species_t_other,
             bool can_eat_meat_other,
@@ -85,7 +81,7 @@ public:
     }
 };
 
-// This might be actually fine?
+// The four specializations.
 template <typename species_t>
 using Plant = Organism<species_t, false, false>;
 
@@ -177,7 +173,8 @@ requires two_plants_cant_meet<
         sp1_eats_p,
         sp2_eats_m,
         sp2_eats_p
-> // Two plants can't meet this requirement.
+> // Two plants can't meet this requirement, therefore a meeting of two plants
+  // will produce an error
 constexpr const std::tuple<
         Organism<species_t, sp1_eats_m, sp1_eats_p>,
         Organism<species_t, sp2_eats_m, sp2_eats_p>,
@@ -188,7 +185,11 @@ encounter(
         Organism<species_t, sp2_eats_m, sp2_eats_p> organism2
 ) {
     if (organism1.is_dead() || organism2.is_dead())
-        return std::make_tuple(organism1.after(), organism2.after(), std::nullopt);
+        return std::make_tuple(
+                organism1.after(),
+                organism2.after(),
+                std::nullopt
+                );
 
     if (sex(organism1, organism2))
         return std::make_tuple(
